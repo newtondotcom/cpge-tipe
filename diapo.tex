@@ -1,0 +1,716 @@
+\documentclass[hyperref={pdfpagelabels=false}]{beamer}
+\usepackage{lmodern}
+\usetheme[secheader]{Madrid}
+%Copenhagen
+%Boadilla
+%CambridgeUS
+%\setbeamertemplate{footline}[page number]
+\usecolortheme[RGB={64, 180, 247}]{structure}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+\usepackage{fancybox}
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{caption} 
+\usepackage[french]{babel}
+\usepackage{tcolorbox}
+\usepackage[export]{adjustbox}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{appendixnumberbeamer}
+
+\title{Transformer la chaleur des datacenters en un système de
+chauffage urbain}
+\subtitle{Présentation orale}
+\author{Augereau Robin}
+\institute{N$^{\circ}$ d'inscription : 48694}
+\date{\today}
+%\setcounter{tocdepth}{1}
+\setbeamertemplate{navigation symbols}{}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{basicstyle=\footnotesize , style=mystyle}
+
+\definecolor{ultramarine}{RGB}{64, 180, 247} 
+\setbeamercolor{button}{bg=ultramarine,fg=ultramarine}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame} 
+
+\subsection*{Problématisation}\label{pb}
+\begin{frame}{Problématisation {\textcolor{ultramarine}{\hyperlink{a6}{\beamerbutton{XXXXXXXXXXX}}}}}
+\begin{tabular}{ p{5.75cm} p{5.75cm}}
+    \begin{center} \includegraphics[scale=0.3]{tempchambre.jpg} \end{center} & Quelques chiffres :  \begin{itemize} \item $ 27 520,5 TWh$ en  consommation mondiale (2021) \item $50 \%$ de cette énergie est dédiée à leur refroidissement \item Prévision : $5 \%$ de la consommation mondiale d'ici 2025 (source : The Shift Project) \end{itemize} 
+%soit une hausse de 1 414 TWh par rapport à 2020 (+ 5,4%), « ce qui revient à ajouter la consommation de l’Inde à la demande mondiale ».
+%Frnace : 473 TWh En 2019
+\end{tabular}
+
+
+
+\begin{alertblock}{Problématique}
+Comment transformer l’énergie thermique des datacenters en un système de chauffage urbain ? 
+\end{alertblock}
+\end{frame} 
+
+\begin{frame}
+\begin{center}
+\includegraphics[scale=0.25]{explication.png}
+\captionof{figure}{Schéma d'un réseau de chaleur, système de chauffage urbain} \label{fig}
+\end{center}
+\end{frame} 
+
+\begin{frame}
+\begin{center}
+\includegraphics[scale=0.45]{cycle.png}
+\captionof{figure}{Décomposition du cycle du fluide} \label{fig}
+\end{center}
+\end{frame}
+
+\begin{frame}{Table des matières}
+\tableofcontents
+\end{frame} 
+
+
+\begin{frame}
+\begin{center}
+{\huge{Modélisation du réseau de chauffage urbain}}\\
+ {\color{white}.}\\
+Récupérer l’énergie thermique au contact de la source chaude 
+\end{center}
+\end{frame}
+
+
+
+\section{Récupérer l’énergie thermique au contact de la source chaude }
+\subsection*{Présentation du système expérimental}\label{e11}
+\begin{frame}{Système expérimental {\textcolor{ultramarine}{\hyperlink{a2}{\beamerbutton{XXXXXXXXXXX}}}} }
+\begin{tabular}{ p{4cm} p{3cm} p{5cm} }
+     \includegraphics[scale=0.5]{watercooling.png} \captionof{figure}{Système réel de watercooling}
+ \label{fig} & \includegraphics[scale=0.12]{exp schéma.png} \captionof{figure}{Schéma de l'expérience}  \label{fig} &  \includegraphics[scale=0.03]{exp photo2.jpg} \captionof{figure}{Photo du montage expérimental} \label{fig} 
+ \end{tabular}
+\textit{Objectif :} mesurer les températures de sortie de l’eau chauffée après contact avec 1 et 2 sources chaudes \\
+
+\hfill{\footnotesize Source \textit{Figure Gauche : ekwb.com}}
+\end{frame}
+
+\begin{frame}{Étude du waterblock {\textcolor{ultramarine}{\hyperlink{a2}{\beamerbutton{XXXXXXXXXXX}}}} }
+\begin{center}
+\includegraphics[scale=0.4]{photo waterblock.png} \captionof{figure}{Photos du waterblock}
+ \label{fig}
+\end{center}
+\end{frame}
+
+\subsection*{Modélisation}\label{e12}
+\begin{frame}{Modélisation du waterblock {\textcolor{ultramarine}{\hyperlink{a2}{\beamerbutton{XXXXXXXXXXX}}}} }
+\begin{center}
+\includegraphics[scale=0.38]{schmé waterblock.png} 
+ \captionof{figure}{Vue en coupe}  \label{fig} 
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{tabular}{ p{7cm} p{5cm} }
+$\rightarrow$ 2 différences de températures \begin{itemize}
+ \item $\Delta T_{sc}^{bp}$ \item  $\Delta T_{bp}^{hp}$ \end{itemize} \par {\color{white}.} \par \textit{Remarque : } Les grandeurs liées à la présence de pâte thermique seront notées comme : $\underline{X}$  & \begin{center} \includegraphics[scale=0.38]{vue coupe waterblock.png} \captionof{figure}{Zoom sur la vue en coupe} \label{fig}  \end{center} 
+\end{tabular}
+\end{frame}
+
+\subsection*{Influence de la pâte thermique}\label{e13}
+\begin{frame}{Différence de température entre la source chaude et le côté haut de la plaque en cuivre (sans pâte thermique)}
+
+%\begin{exampleblock}{Résistance thermique de la couche d'air}
+%\begin{center}
+%$R_a = \frac{T_{bp} - T_{sc}}{\Phi} = \frac{e}{\lambda_a S}$
+%\end{center}
+%\end{exampleblock}
+%
+%or $\Delta T_{sc}^{hp} = \Delta T_{sc}^{bp} + \Delta T_{bp}^{hp}$ \\
+
+\begin{exampleblock}{Différence de température entre le processeur et la plaque (sans pâte thermique)}
+\begin{center} $\Delta T_{sc}^{hp} = (R_a + R_c) \Phi =( \frac{e }{\lambda_a S}+ \frac{e_c}{\lambda_c S})\Phi$ \end{center}
+\end{exampleblock}
+
+AN avec $\Phi = 100$ W : $\Delta T_{sc}^{hp} = 10.30 $K \\
+
+{\color{white}.}
+
+\begin{exampleblock}{Différence de température entre le processeur et la plaque (avec pâte thermique)}
+\begin{center}
+$\underline{\Delta T}_{sc}^{hp} = (R_p + R_c)\Phi =(\frac{4 \pi r^3}{3 \lambda_p S^2}+\frac{e_c}{\lambda_c S}) \Phi $
+\end{center}
+\end{exampleblock}
+
+AN avec $\Phi = 100$ W :$\underline{\Delta T}_{sc}^{hp} = 7.96$K
+\end{frame}
+
+%\begin{frame}
+%\frametitle{Différence de température entre la source chaude et le côté haut de la plaque en cuivre (avec pâte thermique)}
+%\begin{exampleblock}{Résistance de la pâte thermique}
+%\begin{center}
+%$R_p =  \frac{e_p}{\lambda_p S}$ 
+%\end{center}
+%\end{exampleblock}
+%
+%\underline{Estimation de l'épaisseur de la couche de pâte thermique:}\\
+%Goutte sphérique de rayon $r=3$mm. Par conservation de la matière, $V_p = \frac{4}{3} \pi r^3 = S e_p$ ce qui implique que $e_p = \frac{4}{3 S} \pi r^3 $. \\
+%
+%
+%\begin{exampleblock}{Différence de température entre le processeur et la plaque (avec pâte thermique)}
+%\begin{center}
+%$\underline{\Delta T}_{sc}^{hp} = (R_p + R_c)\Phi =(\frac{4 \pi r^3}{3 \lambda_p S^2}+\frac{e_c}{\lambda_c S}) \Phi $
+%\end{center}
+%\end{exampleblock}
+%
+%AN avec $\Phi = 100$ W :$\underline{\Delta T}_{sc}^{hp} =2.7$K
+%\end{frame}
+
+
+
+\begin{frame}{Comparaison des résultats {\textcolor{ultramarine}{\hyperlink{a3}{\beamerbutton{XXXXXXXXXXX}}}} }
+
+\underline{2 cas d’étude:} 
+\begin{itemize}
+\item Absence de pâte thermique $(1)$
+\item Présence de pâte thermique $(2)$
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{ | c |  c |  c | c | }
+ \hline
+ {\color{white}.}& Cas $(1)$ & Cas $(2)$ \\
+ \hline
+ $\Delta T_{théo}$ (en °C) & 10.30 &  7.96 \\
+  \hline
+  Incertitudes & 2.01 & 1.89 \\
+   \hline
+ $\Delta T_{exp}$ (en °C) & 17.12 & 11.77  \\
+ \hline
+ Erreur relative(en \% ) & 66 & 47 \\
+\hline
+ $T_{moy}$ de la plaque (en °C) & 62,5 & 66,6 \\
+ 
+ \hline
+\end{tabular} \par
+\end{center}
+
+$\rightarrow$ Mesures réalisées à l'aide d'une thermistance 
+\end{frame}
+
+
+\subsection*{Utilisation de la thermistance}\label{e14}
+\begin{frame}{Utilisation de la thermistance}
+Établissement d'une courbe d'étalonnage de la thermistance utilisée :\begin{center}
+\includegraphics[scale=0.26]{xpvfmoi.png}
+\captionof{figure}{Photo du montage expérimental} \label{fig}
+\end{center}
+\end{frame}
+\begin{frame}
+\frametitle{Étalonnage de la thermistance}
+\begin{center}
+\includegraphics[scale=0.26]{étalonnagectn.png}\captionof{figure}{Courbe $R = f(T)$} \label{fig}
+\end{center}
+\end{frame}
+
+
+
+
+\subsection*{Différence de température du fluide entrée / sortie}\label{e15}
+\begin{frame}{Différence de température du fluide en entrée et en sortie}
+
+
+Écoulement stationnaire, homogène et incompressible \\
+{\color{white}.}\\
+$D_m~[h+ gz]_{e}^{s} = P_{thermique} + P_{utile} = 0$\\
+{\color{white}.} \\
+$ P_{thermique} = j~S = D_m \Delta h = c (T_s - T_e) $ \\
+
+{\color{white}.} \\
+
+\begin{exampleblock}{Différence de température du fluide après contact avec le waterblock}
+\begin{center} $\Delta T_{s,e}^{1} = \frac{k ~(T_{fluide} - T_{hp} ) ~S}{D_m~c}$ \end{center}
+\end{exampleblock}
+\end{frame}
+
+\subsection*{Cas de plusieurs waterblocks en série}\label{e16}
+\begin{frame}{Cas de plusieurs waterblocks en série}
+$T^i$ est la température à la sortie du i-ième waterblock  ($T^1 = T_s$)\\
+{\color{white}.}\\
+$T^{i+1} = (\frac{kS}{D_m c} + 1) T^i - \frac{kS}{D_m c} T_{hp}$  \\
+{\color{white}.}\\
+On pose $\alpha = \frac{kS}{D_m c} + 1$ et $\beta = \frac{kS}{D_m c} T_{hp}$ \\
+{\color{white}.} \\
+\begin{exampleblock}{Température du fluide après contact avec i waterblocks}
+\begin{center} $T^i = \frac{\beta}{1-\alpha} +  (T^e - \frac{\beta}{1-\alpha} ) {\alpha}^i$ \end{center} \end{exampleblock}
+\end{frame}
+
+
+
+\begin{frame}{Conclusion / Interprétation {\textcolor{ultramarine}{\hyperlink{a53}{\beamerbutton{XXXXXXXXXXX}}}} }
+\begin{figure}[!htb]
+  \begin{minipage}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[scale=0.4]{courbe rack2.png}
+    \caption{Température en fonction du nombre de waterblocks ($T_{sc} = 74$°C)}
+    \begin{center}
+    \label{fig:label-1}
+    \end{center}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[scale=0.23]{rack.jpg}
+    \caption{Différentes configurations de serveurs}
+    \label{fig:label-2}
+  \end{minipage}
+\end{figure}
+\hfill{\footnotesize Source \textit{Figure Droite : floatingpoint.audio} }
+\end{frame}
+
+\begin{frame}{Comparaison des résultats \textcolor{ultramarine}{\hyperlink{a3}{\beamerbutton{XXXXXXXXXXX}}}}
+\underline{3 cas d’étude:} 
+\begin{itemize}
+\item Circuit composé d’un seul waterblock $(1)$
+\item Circuit composé d’un waterblock couplé à de la pâte thermique $(2)$
+\item Circuit composé de 2 waterblocks couplés à de la pâte thermique. $(3)$
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{ | c |  c |  c |  c | }
+ \hline
+ {\color{white}.}& Cas $(1)$ & Cas $(2)$ & Cas $(3)$ \\
+ \hline
+ $\Delta T_{exp}$ (en °C) & 0.41 & 1.44 & 2.86 \\
+ \hline
+ $\Delta T_{théo}$ (en °C) & 3.69 & 6,13 & 11.74 \\
+ \hline
+ $T_{moy}$ de la plaque (en °C)& 60 & 63 & 80\\
+  \hline
+ Erreur relative(en \% ) & $88$ & $76$ & $75$ \\
+ \hline
+\end{tabular}
+\end{center}
+\end{frame}
+
+
+
+\section{Transporter le fluide réchauffé}
+
+\begin{frame}
+\begin{center}
+{\huge{Modélisation du réseau de chauffage urbain}}\\
+ {\color{white}.}\\
+Transporter le fluide réchauffé
+\end{center}
+\end{frame}
+
+\subsection*{Modélisation}\label{t1}
+\begin{frame}{Détermination de la température du fluide à une longueur donnée {\textcolor{ultramarine}{\hyperlink{a1}{\beamerbutton{XXXXXXXXXXX}}}}}
+\begin{center}
+ \begin{tabular}{ p{6cm} p{6cm} }
+\includegraphics[scale=0.23]{coupe.png} \captionof{figure}{Vue en coupe d'une canalisation}  \label{fig} & \begin{center}  \includegraphics[scale=0.27]{m2.png} \captionof{figure}{Modélisation d'une conduite} \label{fig} \end{center} 
+ \end{tabular}
+\end{center}
+\end{frame}
+
+
+\subsection*{Mise en équation}\label{t2}
+%\begin{frame}
+%Écoulement supposé stationnaire, unidimensionnel : étude thermodynamique\\
+%$R_{th~totale} (z) = \frac{1}{ 2 \pi z } (\frac{1}{h_1  r_1} + \frac{ln(\frac{r_2}{r_1})}{ \lambda_{acier} } + \frac{ln(\frac{r_3}{r_2})}{ \lambda_{isolant} } + \frac{1}{ h_2  r_3})$  en $K.W^{-1}$ \\
+%On pose $\gamma = \frac{1}{ 2 \pi} (\frac{1}{h_1  r_1} + \frac{ln(\frac{r_2}{r_1})}{ \lambda_{acier} } + \frac{ln(\frac{r_3}{r_2})}{ \lambda_{isolant} } + \frac{1}{ h_2  r_3})$ \\
+%Régime stationnaire : $ \frac{\partial T}{\partial t} = 0$ \\
+%Puissance cédée par le fluide à l'extérieur entre $z$ et $z+dz$ : $\delta P_{th} = \frac{1}{\gamma} (T_0 - T(z)) dz$ \\
+%$1^{er}$ principe de la thermodynamique à $\Sigma^+$ pendant $dt$ : $D_m c_f dt (T(z+dz) - T(z)) = \delta P_{th} = \frac{1}{\gamma} (T(z) - T_0 ) dz$\\
+% $\mathcal{L} = \gamma D_m c_f$ est la longueur caractéristique du problème
+%\begin{exampleblock}{Équation différentielle d'ordre 1}
+%\begin{center}
+%$\frac{\partial T(z)}{\partial z}  + \frac{T(z)}{\mathcal{L}}= \frac{T_0}{\mathcal{L}}$
+%\end{center}
+%\end{exampleblock}
+%\end{frame}
+
+\begin{frame}{Mise en équation}
+%Écoulement supposé stationnaire, unidimensionnel : 
+Etude thermodynamique\\
+On pose $\mathcal{L} = \frac{D_m c_f}{ 2 \pi} (\frac{1}{h_1  r_1} + \frac{ln(\frac{r_2}{r_1})}{ \lambda_{acier} } + \frac{ln(\frac{r_3}{r_2})}{ \lambda_{isolant} } + \frac{1}{ h_2  r_4} + \frac{ln(\frac{r_3}{r_4})}{ \lambda_{acier} })$ \\
+ AN : $\mathcal{L} = 3.23$ km \par
+
+Régime stationnaire : $ \frac{\partial T}{\partial t} = 0$ \par
+
+$D_m c_f dt (T(z+dz) - T(z)) = \delta P_{th} = \frac{1}{\gamma} (T(z) - T_0 ) dz$ avec $\gamma =  \frac{\mathcal{L}}{D_m c_f}$ \par
+\begin{exampleblock}{Équation différentielle d'ordre 1}
+\begin{center}
+$\frac{\partial T(z)}{\partial z}  + \frac{T(z)}{\mathcal{L}}= \frac{T_0}{\mathcal{L}}$
+\end{center}
+\end{exampleblock}
+\end{frame}
+
+\subsection*{Résolution}\label{t3}
+\begin{frame}{Implémentation d'un script Python pour résoudre cette équation différentielle {\textcolor{ultramarine}{\hyperlink{a51}{\beamerbutton{XXXXXXXXXXX}}}} }
+Entrée de l'algorithme : Grandeurs présentées dans l' \textbf{Annexe 1}\\
+Méthode d'Euler artisanale présentée dans l' \textbf{Annexe 5}\\
+Sortie de l'algorithme : Courbe $T(z)$\\
+
+
+\begin{center}
+\includegraphics[scale=0.27]{graphe python.png}
+\end{center}
+\end{frame}
+
+
+\section{Délivrer l’énergie thermique au client par un échangeur thermique}
+
+\begin{frame}
+\begin{center}
+{\huge{Modélisation du réseau de chauffage urbain}}\\
+ {\color{white}.}\\
+Délivrer l’énergie thermique au client par un échangeur thermique
+\end{center}
+\end{frame}
+
+
+\subsection*{Étude d'un échangeur thermique}\label{e21}
+\begin{frame}{Étude d'un échangeur thermique {\textcolor{ultramarine}{\hyperlink{a8}{\beamerbutton{XXXXXXXXXXX}}}}}
+\frametitle{Étude d'un échangeur thermique}
+Détermination de l'énergie récupérable\\
+\begin{center}  \includegraphics[scale=0.30]{echangeurplaques.png} \captionof{figure}{Vue éclatée d'un échangeur à plaques} \label{fig} \end{center} 
+\hfill{\footnotesize Source \textit{Figure : wermac.org}}
+\end{frame}
+
+\begin{frame}
+\begin{figure}[!htb]
+  \begin{minipage}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[scale=0.25]{échangeur.png}
+    \caption{Schéma de 2 plaques d'un échangeur}
+    \label{fig:label-1}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\linewidth}
+    \centering
+    \includegraphics[scale=0.21]{2changeur leg1.png}
+    \caption{Schéma d'un échangeur}
+    \label{fig:label-2}
+  \end{minipage}
+\end{figure}
+\underline{Détermination de la longueur caractéristique de l'écoulement :}\par
+$ \mathcal{L} = (N-1) \frac{\text{Section}}{\text{Périmètre}} = (N-1) \frac{ae}{2(a+e)}\cong \frac{N-1}{2} e$ \par
+\end{frame}
+
+
+\subsection*{Détermination de $h_1$}\label{e22}
+\begin{frame}{Détermination du coefficient $h_1$ {\textcolor{ultramarine}{\hyperlink{a52}{\beamerbutton{XXXXXXXXXXX}}}} }
+
+Démarche :
+\begin{itemize}
+\item Nombre de Prandtl : $Pr = \frac{\eta c}{\lambda}$  {\color{ultramarine} $4.10$ su}
+\item Nombre de Reynolds : $Re = \frac{\rho v \mathcal{L}}{\eta}$ {\color{ultramarine} $9200$ su}
+\item Nombre de Nusselt : $Nu = 0.023\times {Pr}^{0.4} \times {Re}^{0.8}$ {\color{ultramarine} $59.98$ su}
+\item Valeur de $h_1$ : $Nu = \frac{h \mathcal{L}}{\lambda}$ {\color{ultramarine} $ 46.50$ $W.m^{-2}.K^{-1}$}
+\end{itemize}
+\end{frame}
+
+\subsection*{Détermination du débit}\label{e23}
+\begin{frame}{Détermination du débit permettant de respecter la consigne {\textcolor{ultramarine}{\hyperlink{a52}{\beamerbutton{XXXXXXXXXXX}}}} }
+Consigne : Permettre un chauffage du fluide du circuit secondaire de $20^{\circ}$C à $55^{\circ}$C (Température préconisée par l'ADEME) \par
+
+Utilisation de la méthode NUT :
+Procédé répété jusqu'à obtenir une température cohérente 
+\end{frame}
+
+
+\begin{frame}[noframenumbering]{Méthode NUT {\textcolor{ultramarine}{\hyperlink{a52}{\beamerbutton{XXXXXXXXXXX}}}} }
+Travail avec les débits de capacité thermique du fluide en $J.K^{-1}.s^{-1}$ : $q_t = q_m c$
+\begin{itemize}
+\item On fixe $q_{m,f}$ arbitrairement {\color{ultramarine} $2$ $kg.s^{-1}$}
+\item NUT $=\frac{h_1 S}{q_{t,min}}$  {\color{ultramarine} 0.98 su}
+\item Calcul de $ R = \frac{q_{t,c}}{q_{t,f}} = \frac{q_{m,c}}{q_{m,f}}$ car $c_{p,c}=c_{p,f}$ {\color{ultramarine} $2,5 .10^{-2}$ su}
+\item $E = \frac{1 -  e^{ [- NUT \times (1 - R)]}}{1 - R \times e^{ [- NUT \times (1 - R)] }}$ {\color{ultramarine} 0.62 su}
+\item Comme $q_{t,min}=q_{t,f}$, $ E = \frac{\Delta T_f}{\Delta T_{max}} = \frac{T_f^s - T_f^e}{T_c^e - T_f^e}$
+\item Validation de $T_f^s$ par rapport à celle consignée {\color{ultramarine} 51.2 $^{\circ}$C}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+AN : Pour $q_{m,f} = 5.10^{-2}$ $kg.s^{-1}$ et $q_{m,c} = 0.5 $  $kg.s^{-1}$, $T_f^s$ = 55.6$^{\circ}$C \par
+
+\underline{Température de sortie du fluide chaud :} \par
+Échangeur parfait : $q_{t,c} (T_c^e - T_c^s )  = q_{t,f} (T_f^s - T_f^e)$ \par
+Ainsi, $T_c^s = T_c^e - \frac{ q_{t,f}}{q_{t,c}}(T_f^s - T_f^e)$ \par
+
+AN : $T_c^s = 66.4^{\circ}$C  \par 
+
+Consommation moyen d'un immeuble de $k$ logements standards * : $Q_j = 160 k$ en $L.{\text{jour}^{-1}}$ \\
+{\color{white}.} \\
+Permettrait alors un approvisionnement de \textbf{27 logements standards}\par 
+
+\hfill{\footnotesize * Source \textit{thermexcel.com}}
+\end{frame}
+
+
+\section{Intêret d'un réseau de chauffage urbain}
+\begin{frame}
+\begin{center}
+{\huge{Intêret d'un réseau de chauffage urbain}}\\
+\end{center}
+\end{frame}
+
+\subsection*{Puissance disponible}\label{icu1}
+\begin{frame}{Puissance disponible}
+$n = 20 000$ est un nombre moyen de serveurs par datacenter \\
+$\mathcal{P} = 100$ W est la puissance moyenne consommée \\
+Puissance disponible : $ P =  n\mathcal{P} = 2$ MW \\
+\begin{center}
+\includegraphics[scale=0.32]{data.png} \captionof{figure}{Datacenter}
+\end{center}
+
+
+\end{frame}
+
+\subsection*{Puissance acheminée}\label{icu2}
+\begin{frame}{Puissance acheminée}
+\begin{center}
+\includegraphics[scale=0.33]{pompes.png} \captionof{figure}{Pompes}
+\end{center}
+\end{frame}
+
+\subsection*{Puissance disponible}\label{icu3}
+\begin{frame}{Rendement}
+Rendement : $\eta = \frac{P_{\text{utile}}}{P_{\text{fournie}}} = \frac{P - P_{\text{pertes thermiques}}}{P + P_{\text{pompes}}}$ \\
+{\color{white}.} \\
+$P_{\text{pompes}} =  2 \times 15$ kW \\
+{\color{white}.} \\
+Pour $L = 500$ m, $P_{\text{pertes thermiques}} = 80$ kW \\
+Pour $L = 1000$ m, $P_{\text{pertes thermiques}} = 150$ kW \\
+{\color{white}.} \\
+AN : \\
+Pour $L = 500$ m, $\eta= 0.94$ \\
+Pour $L = 1000$ m, $\eta = 0.91$ \\
+%Puissance pertes : pertes de charges régumlières et singulières dans les 3 parties du cycle
+\end{frame}
+
+\subsection*{Approche critique}\label{icu4}
+\begin{frame}{Approche critique}
+\begin{itemize}
+\item Discussion des hypothèses
+\item Température du fluide trop faible 
+\item Difficultés en cas d'entretien
+\item Système viable pour une ville concentrée
+\end{itemize}
+\end{frame}
+
+\subsection*{Fin}\label{fin}
+\begin{frame}
+\begin{center}
+\huge{Fin}
+\end{center}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ANNNNNNNNNNEXXXXXXXXXES%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\appendix
+
+\begin{frame}
+\begin{center}
+\huge{Annexes}
+\end{center}
+\end{frame}
+
+\section{Annexes}
+\subsection*{Définition des grandeurs du circuit}
+
+\begin{frame}{Annexe 1 {\textcolor{ultramarine}{\hyperlink{t1}{\beamerbutton{XXXXXXXXXXX}}}} }\label{a1}
+Durant toute cette étude, les applications seront effectuées avec les valeurs suivantes. Elles ont été choisies en accord avec un système réel. 
+\begin{itemize}
+\item Longueur du circuit : $L=8000~m$
+\item Température à l'extérieur des canalisations : $T_0 = 15^{\circ}C = 288~K$
+\item Température de l'eau en entrée du circuit ($\rightarrow$ en sortie du datacenter) : $T_f = 80^{\circ}C = 353~K$
+\item Masse volumique de l'eau : $\rho = 980~kg.m^{-3} $ à 65$^{\circ}$
+\item Viscosité dynamique de l'eau : $\eta = 434 10^{-6}~Pl$ à 65$^{\circ}$
+\item Débit du fluide circulant dans la canalisation $D=1.96~m^{3}.s^{-1}$
+\item Rayon intérieur de la canalisation en acier : $r_{acier,int} = r_1=0.28~m$
+\item Rayon extérieur de la canalisation en acier : $r_{isolant,int} = r_{acier,ext} = r_2 = 0.3~m $
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{itemize}
+\item Rayon extérieur de l'isolant entourant l'acier : $r_{isolant,ext} = r_3 = 0.38 ~m$, 
+\item Rayon extérieur de la paroi extérieure en acier : $r_{ext} = r_4 = 0.4 ~m$
+\item Conductivité thermique de l'eau : $\lambda_{eau} = 0.598~W.m^{-1}.K^{-1} $
+\item Conductivité thermique de l'acier : $\lambda_{acier} = 50.2~W.m^{-1}.K^{-1} $
+\item Conductivité thermique de l'isolant : $\lambda_{isolant} = 0.04~W.m^{-1}.K^{-1} $
+\item Coefficient conducto-convectif entre l'eau et la canalisation en acier : $h_1 = 195.2 ~W.m^{-2}.K^{-1}$ (calculé)
+\item Coefficient conducto-convectif entre l'acier extérieur et le milieu extérieur : $h_2 = 3.46 ~W.m^{-2}.K^{-1}$ (calculé)
+\item Capacité thermique massique du fluide : $c_f = 4 180~ J.K^{-1}.kg^{-1}$
+\end{itemize}
+Ces valeurs placent le système étudié en régime turbulent :$Re = 10268$
+\end{frame}
+
+\subsection*{Définition des grandeurs du montage expérimental}\label{a2}
+\begin{frame}{Annexe 2 {\textcolor{ultramarine}{\hyperlink{e12}{\beamerbutton{XXXXXXXXXXX}}}} }
+
+	\begin{itemize}
+	\item $S = 4$ $cm^2$ la surface d'échange entre le waterblock et la source chaude
+	\item $k = 390 000$ $W.k^{-1}.m^{-2}$ le coefficient d'échange convectif entre le cuivre et l'eau
+	\item $D_m= 0.33$ $kg.s^{-1}$ le débit massique circulant dans le watercooling 
+	\item $c = 4180$ $J.kg^{-1}.K^{-1}$ la capacité thermique de l ' eau	
+	\item $T_e =17$°C la température du fluide en entrée du circuit 
+	\item $T^1$ la température en sortie du waterblock sans pâte thermique
+	\item $\underline{T}^1$ la température en sortie du waterblock avec pâte thermique	
+	\item $T_{bp}$ la température de la plaque de cuivre du côté de la source chaude 
+	\item $T_{hp}$ la température de la plaque de cuivre du côté du fluide 
+	\end{itemize}
+\end{frame}
+\begin{frame}
+	\begin{itemize}
+	\item $T_{sc} = 74$°C la température de la source chaude
+	\item $\lambda_{a}=0.03$ $W.k^{-1}.m^{-1}$ la conductivité thermique de l'air
+	\item $\lambda_{p}=11.2$ $W.k^{-1}.m^{-1}$ la conductivité thermique de la pâte thermique
+	\item $e_a = \SI{1}{\micro\metre}$ l'épaisseur de la couche d'air entre le processeur et le radiateur (taille caractéristique des reliefs d’une surface métallique sans traitements de surface) 
+	\item $e_p$ l'épaisseur de pâte thermique entre le processeur et le radiateur
+	\item $e = 2 mm$ l'épaisseur de la plaque de cuivre
+	\end{itemize}
+\end{frame}
+
+\subsection*{Montage expérimental}\label{a3}
+
+\begin{frame}{Annexe 3a : 1$^{\text{er}}$ Montage expérimental {\textcolor{ultramarine}{\hyperlink{e13}{\beamerbutton{XXXXXXXXXXX}}}} }
+\begin{center}
+\includegraphics[scale=0.06]{exp photo.jpg}
+\captionof{figure}{Photo du montage expérimental} \label{fig}
+\end{center}
+\end{frame}
+\begin{frame}{Annexe 3b : 2$^{\text{ème}}$ Montage expérimental {\textcolor{ultramarine}{\hyperlink{e13}{\beamerbutton{XXXXXXXXXXX}}}} }
+\begin{center}
+\includegraphics[scale=0.06]{exp photo2.jpg}
+\captionof{figure}{Photo du montage expérimental} \label{fig}
+\end{center}
+\end{frame}
+
+\subsection*{Coefficients convectifs}\label{a4}
+
+\begin{frame}{Annexe 4 {\textcolor{ultramarine}{\hyperlink{grd}{\beamerbutton{XXXXXXXXXXX}}}} }
+Approximation des coefficients convectifs selon le site de Hervé Silve :
+\begin{itemize}
+\item Coefficient de transfert convectif entre l'eau et l'acier : $h_1 = 2040 x (1 + 0,015 x T_{moyenne}) x (v^{0,87} / (2 r_1)^{0,1}$ en $W.m^{-2}.K^{-1}$
+\item Coefficient de transfert convectif entre l'isolant et l'acier : 
+$ h_2 = 5 x \frac{T_f - T_0}{T_0 x 2 r_3} 0,25$ en $W.m^{-2}.K^{-1}$
+\item AN : Valeurs calculées : \begin{itemize}
+\item $h_1 = 132816.72 ~W.m^{-2}.K^{-1}$
+\item $h_2 = 3.89~W.m^{-2}.K^{-1}$
+\end{itemize} 
+\end{itemize}
+\end{frame}
+
+\subsection*{Algorithmes Python}\label{a5}
+\subsubsection*{1}\label{a51}
+\begin{frame}{Annexe 5 : Méthode Euler {\textcolor{ultramarine}{\hyperlink{t3}{\beamerbutton{XXXXXXXXXXX}}}} }
+%\scriptsize
+%\inputminted{python}{algo.py}
+{\color{black}\footnotesize \lstinputlisting[language=Python]{algo.py}}
+\end{frame}
+
+\subsubsection*{1}\label{a52}
+\begin{frame}{Annexe 6 : Échangeur thermique {\textcolor{ultramarine}{\hyperlink{e23}{\beamerbutton{XXXXXXXXXXX}}}} }
+{\color{black}\footnotesize\lstinputlisting[language=Python]{prgm tipe.py}}
+\end{frame}
+
+\subsubsection*{2}\label{a53}
+\begin{frame}{Annexe 7 : Datacenters {\textcolor{ultramarine}{\hyperlink{e16}{\beamerbutton{XXXXXXXXXXX}}}} }
+{\color{black}\footnotesize\lstinputlisting[language=Python]{algo datacenters.py}}
+\end{frame}
+
+
+\subsection*{Données de ma chambre}\label{a6}
+
+\begin{frame}{Annexe 8 {\textcolor{ultramarine}{\hyperlink{pb}{\beamerbutton{XXXXXXXXXXX}}}} }
+Surface au sol : $\mathcal{S} = 9.84$ m$^2$ \par
+
+Volume total : $\mathcal{V} = 2.5 \times \mathcal{S} = 24.6 $ m$^3$ \par
+
+%3 ventilateurs doté d'un débit de 32 CFM (\textit{Cubic Foot per Minute }) \par
+
+
+Évolution de la température constatée : de $21.1^{\circ}C$ à 11H à $26.9^{\circ}C$ à 19H43 \par
+
+Évolution de l'humidité constatée : de 53.3$\%$ à 11h à 46.8$\%$ à 19h43 \par 
+
+%Données : $1 CFM = 1,399 m^3.h^{-1}$\\
+
+Temps caractéristique : 150 h 
+\end{frame}
+
+%\subsection*{Calcul des incertitudes}
+%
+%\begin{frame}
+%\frametitle{Calcul des incertitudes}
+%\begin{itemize}
+%\item Incertitude d'une somme : $\sigma_{A + B} = \sigma_A + \sigma _B$
+%\item Incertitude d'un produit ($A = B C$) : $\sigma_A = A \sqrt{(\frac{\sigma_B}{B})^2 +(\frac{\sigma_C}{C})^2 }$
+%\end{itemize}
+%\end{frame}
+
+
+
+\subsection*{Définition des grandeurs de l'échangeur}\label{a8}
+\begin{frame}{Annexe 10 {\textcolor{ultramarine}{\hyperlink{e21}{\beamerbutton{XXXXXXXXXXX}}}} }
+
+	\begin{itemize}
+	\item $a = 1$ $m$ la hauteur des plaques
+	\item $b = 2$ $m$ la largeur des plaques
+	\item $N$ le nombre de plaques
+	\item $e = 5.4$ $cm$ l'épaisseur de circulation d'eau
+	\item $T_e $ la température du fluide en entrée du circuit  
+	\item $T_f^e$ et $T_f^s$ les températures d'entrée et sortie du fluide froid (réseau secondaire)
+	\item $T_c^e$ et $c_f^s$ les températures d'entrée et sortie du fluide chaud (réseau primaire)
+	\item $r = 15$ cm le rayon de la sous conduite
+	\end{itemize}
+\end{frame}
+
+%[noframenumbering]
+
+%\subsection*{Bibliographie}
+%
+%\begin{frame}
+%\frametitle{Bibliographie}
+%\begin{itemize}
+%\item 
+%\item
+%\item 
+%\end{itemize}
+%\end{frame}
+
+
+\end{document}
